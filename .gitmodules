@@ -1,0 +1,6 @@
+[submodule "dependencies/black"]
+	path = dependencies/black
+	url = https://github.com/ohenley/black
+[submodule "dependencies/ib-ada"]
+	path = dependencies/ib-ada
+	url = https://github.com/ohenley/ib-ada
