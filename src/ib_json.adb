@@ -61,7 +61,7 @@ package body ib_json is
       j : string :=
         """" & k & """ : {" &
         jwrt ("contract", v.contract, false) &
-        jwrt ("value", safe_float(v.quantity) * v.average_cost, false) &
+        jwrt ("open_value", safe_float(v.quantity) * v.average_cost, false) &
         jwrt ("quantity", v.quantity, false) &
         jwrt ("average_cost", v.average_cost, false) &
         jwrt ("pnl_unrealized", v.pnl_unrealized, false) &
@@ -131,12 +131,12 @@ package body ib_json is
       counter : count_type := 0;
    begin
       append(j, """" & k & """ : {");
-      for summary in v.iterate loop
+      for id in v.iterate loop
          counter := counter + 1;
          if counter = v.length then
-            append(j, jwrt (+account_map.key(summary), v(summary), true));
+            append(j, jwrt (+account_map.key(id), v(id), true));
          else
-            append(j, jwrt (+account_map.key(summary), v(summary), false));
+            append(j, jwrt (+account_map.key(id), v(id), false));
          end if;
       end loop;
       append(j, "}");
