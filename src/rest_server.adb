@@ -133,6 +133,14 @@ begin
                   begin
                      Instance'Output (Stream (Connection), OK (Data => json_resp));
                   end;
+               elsif request.resource = "/open_orders" then
+                  ib_ada.communication.open_orders;
+                  declare
+                     json_resp : string := "{" & ib_json.jwrt ("accounts", accounts, true) & "}";
+                  begin
+                     Instance'Output (Stream (Connection), OK (Data => json_resp));
+                  end;
+
                elsif request.resource = "/place_order" then
                   declare
                      side : order_side_type := order_side_type'value (request.parameter ("side"));
@@ -148,10 +156,48 @@ begin
                         Instance'Output (Stream (Connection), OK (Data => json_resp));
                      end;
                   end;
+               elsif request.resource = "/place_fake_order" then
+                  declare
+                     side : order_side_type := order_side_type'value (request.parameter ("side"));
+                     symbol : string := request.parameter ("symbol");
+                     quantity : integer := integer'value (request.parameter ("quantity"));
+                     at_price_type : order_at_price_type := order_at_price_type'value (request.parameter ("at_price_type"));
+                     req_id : integer;
+                     commission : safe_float;
+                  begin
+                     req_id := ib_ada.communication.place_fake_order (side, symbol, quantity, at_price_type);
+                     commission := ib_ada.communication.get_commission (req_id);
+                     declare
+                        json_resp : string := "{" &
+                          ib_json.jwrt ("request_id", req_id, false) &
+                          ib_json.jwrt ("commission", commission, true) &
+                          "}";
+                     begin
+                        Instance'Output (Stream (Connection), OK (Data => json_resp));
+                     end;
+                  end;
+               elsif request.resource = "/cancel_order" then
+                  if request.has_parameter ("request_id") then
+                     declare
+                        request_id : integer := integer'value (request.parameter ("request_id"));
+                     begin
+                        ib_ada.communication.cancel_order (request_id);
+                        Instance'Output (Stream (Connection), OK (Data => "{ ""success"" : ""cancel order " & request_id'image & " sent.""}"));
+                     end;
+                  else
+                     Instance'Output (Stream (Connection), OK (Data =>  "{ ""fail"" : ""request_id needed as query parameter.""}"  ));
+                  end if;
                elsif Request.Resource = "/accounts_summaries" then
                   ib_ada.communication.account_summary (ib_ada.BUYING_POWER);
                   declare
                      json_resp : string := "{" & ib_json.jwrt ("accounts", accounts, true) & "}";
+                  begin
+                     Instance'Output (Stream (Connection), OK (Data => json_resp));
+                  end;
+               elsif Request.Resource = "/test" then
+                  ib_ada.communication.market_data ("AAPL", 265598);
+                  declare
+                     json_resp : string := "{ called test }";
                   begin
                      Instance'Output (Stream (Connection), OK (Data => json_resp));
                   end;

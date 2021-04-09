@@ -82,6 +82,47 @@ package body ib_json is
       return last_item (j, last);
    end;
 
+   function jwrt (k : string; v: order_type; last : boolean) return string is
+      j : string :=
+        """" & k & """ : {" &
+        jwrt ("side", +v.side'image, false) &
+        jwrt ("time_in_force", +v.time_in_force'image, false) &
+        jwrt ("at_price_type", +v.at_price_type'image, false) &
+        jwrt ("quantity", +v.quantity'image, true) &
+        "}";
+   begin
+      return last_item (j, last);
+   end;
+
+
+   function jwrt (k : string; v: open_order_type; last : boolean) return string is
+      j : string :=
+        """" & k & """ : {" &
+        jwrt ("request_id", +v.request_id'image, false) &
+        jwrt ("order", v.order, false) &
+        jwrt ("contract", v.contract, true) &
+        "}";
+   begin
+      return last_item (j, last);
+   end;
+
+   function jwrt (k : string; v: open_order_map.map; last : boolean) return string is
+      j : unbounded_string;
+      counter : count_type := 0;
+   begin
+      append(j, """" & k & """ : {");
+      for oo in v.iterate loop
+         counter := counter + 1;
+         if counter = v.length then
+            append(j, jwrt (+open_order_map.key(oo), v(oo), true));
+         else
+            append(j, jwrt (+open_order_map.key(oo), v(oo), false));
+         end if;
+      end loop;
+      append(j, "}");
+      return last_item(+j, last);
+   end;
+
    function jwrt (k : string; v: position_map.map; last : boolean) return string is
       j : unbounded_string;
       counter : count_type := 0;
@@ -119,6 +160,7 @@ package body ib_json is
    function jwrt (k : string; v: act_type; last : boolean) return string is
       j : string :=
         """" & k & """ : {" &
+        jwrt ("open_orders", v.open_orders, false) &
         jwrt ("positions", v.positions, false) &
         jwrt ("summaries", v.summaries, true) &
         "}";
