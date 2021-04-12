@@ -187,13 +187,21 @@ begin
                   else
                      Instance'Output (Stream (Connection), OK (Data =>  "{ ""fail"" : ""request_id needed as query parameter.""}"  ));
                   end if;
-               elsif Request.Resource = "/accounts_summaries" then
-                  ib_ada.communication.account_summary (ib_ada.BUYING_POWER);
-                  declare
-                     json_resp : string := "{" & ib_json.jwrt ("accounts", accounts, true) & "}";
-                  begin
-                     Instance'Output (Stream (Connection), OK (Data => json_resp));
-                  end;
+               elsif Request.Resource = "/accounts_summary" then
+                  if request.has_parameter ("tag") then
+                     declare
+                        tag : tag_type := tag_type'value (request.parameter ("tag"));
+                     begin
+                        ib_ada.communication.accounts_summary (tag);
+                        declare
+                           json_resp : string := "{" & ib_json.jwrt ("accounts", accounts, true) & "}";
+                        begin
+                           Instance'Output (Stream (Connection), OK (Data => json_resp));
+                        end;
+                     end;
+                  else
+                     Instance'Output (Stream (Connection), OK (Data =>  "{ ""fail"" : ""tag is invalid.""}"  ));
+                  end if;
                elsif Request.Resource = "/test" then
                   ib_ada.communication.market_data ("AAPL", 265598);
                   declare
