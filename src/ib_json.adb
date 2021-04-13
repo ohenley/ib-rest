@@ -98,7 +98,7 @@ package body ib_json is
    function jwrt (k : string; v: open_order_type; last : boolean) return string is
       j : string :=
         """" & k & """ : {" &
-        jwrt ("request_id", +v.request_id'image, false) &
+        jwrt ("request_id", +v.request_id, false) &
         jwrt ("order", v.order, false) &
         jwrt ("contract", v.contract, true) &
         "}";

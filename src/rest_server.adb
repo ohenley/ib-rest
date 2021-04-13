@@ -182,7 +182,7 @@ begin
                         request_id : integer := integer'value (request.parameter ("request_id"));
                      begin
                         ib_ada.communication.cancel_order (request_id);
-                        Instance'Output (Stream (Connection), OK (Data => "{ ""success"" : ""cancel order " & request_id'image & " sent.""}"));
+                        Instance'Output (Stream (Connection), OK (Data => "{ ""success"" : ""cancel order " & trim(request_id'image, Ada.Strings.Left) & " sent.""}"));
                      end;
                   else
                      Instance'Output (Stream (Connection), OK (Data =>  "{ ""fail"" : ""request_id needed as query parameter.""}"  ));
