@@ -1,7 +1,7 @@
 with "./dependencies/ib-ada/ib_ada.gpr";
 with "./dependencies/black/black.gpr";
 
-project Ib_Rest is
+project ib_rest is
 
    for Create_Missing_Dirs use "True";
    for Source_Dirs use ("src");
@@ -14,5 +14,5 @@ project Ib_Rest is
       for Global_Compilation_Switches ("ada") use ("-gnatE");
    end Builder;
 
-end Ib_Rest;
+end ib_rest;
 

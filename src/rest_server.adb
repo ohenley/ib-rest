@@ -25,7 +25,7 @@ procedure rest_server is
    gateway : ib_ada.session_type := UNDEFINED;
 
    function handle_command_line_arguments return boolean is
-      help : string := "try: rest_server run port:8080 gateway:ib_paper";
+      help : string := "try: ./rest_server run port:8080 gateway:ib_paper";
       version : string := "0.1.0 : Interactive Broker rest_server";
 
       subject : unbounded_string;
@@ -223,37 +223,3 @@ begin
    end if;
 
 end;
-
-
--- if found, returns TSLA position with pnl data --> "http://127.0.0.1:8080/positions?symbol=TSLA&pnl=true"
--- returns all positions without pnl data        --> "http://127.0.0.1:8080/positions?pnl=false"
--- returns buying power --> "http://127.0.0.1:8080/accounts?summaries=buying_power"
-
-
---  declare
---     resp_msg : unbounded_string := "";
---
---     procedure append_msg(parameter : string) is
---        msg := string := "| missing '" & parameter & "' parameter";
---     begin
---        append (resp_msg, +msg);
---     end;
---
---  begin
---     if not request.has_parameter ("side") then
---        append_msg ("side");
---     end if;
---
---     if not request.has_parameter ("symbol") then
---        append_msg ("symbol");
---     end if;
---
---     if not request.has_parameter ("quantity") then
---        append_msg ("quantity");
---     end if;
---
---     if not request.has_parameter ("at_price_type") then
---        append_msg ("at_price_type");
---     end if;
---
---  end;

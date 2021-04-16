@@ -8,7 +8,7 @@ package ib_json is
    function jwrt (k : string; v : safe_float; last : boolean) return string;
    function jwrt (k : string; v: contract_type; last : boolean) return string;
    function jwrt (k : string; v: position_type; last : boolean) return string;
-   function jwrt (k : string; v: open_order_map.map; last : boolean) return string;
+   function jwrt (k : string; v: open_order_vector.vector; last : boolean) return string;
    function jwrt (k : string; v: position_map.map; last : boolean) return string;
    function jwrt (k : string; v: summary_map.map; last : boolean) return string;
    function jwrt (k : string; v: act_type; last : boolean) return string;

@@ -70,24 +70,33 @@ if __name__ == "__main__":
     main_account_id = list(accounts_summary["accounts"].keys())[0]
     print(main_account_id)
 
-    # positions = get_positions(main_account_id)
-    # print(json.dumps(positions, indent=4, sort_keys=True))
+    positions_with_pnl = get_positions_with_pnls(main_account_id)
+    positions_with_pnl = positions_with_pnl["accounts"][main_account_id]["positions"]
+    total_pnl = 0
+    total_stake = 0
+    for pos in positions_with_pnl:
+        total_stake = total_stake + positions_with_pnl[pos]["open_value"]
+        total_pnl = total_pnl + positions_with_pnl[pos]["pnl_unrealized"]
+    
+    positions_with_pnl.update({"total_pnl" : total_pnl,
+                               "total_stake" : total_stake,
+                               "appreciation" : total_pnl/total_stake})
 
-    # positions_with_pnl = get_positions_with_pnls(main_account_id)
-    # print(json.dumps(positions, indent=4, sort_keys=True))
+    print(json.dumps(positions_with_pnl, indent=4, sort_keys=True))
 
-    # order = place_order ("buy", "T", 10, "midprice")
-    # print(json.dumps(order, indent=4, sort_keys=True))
 
-    # oo = open_orders()
-    # oo = oo["accounts"][main_account_id]["open_orders"]
-    # print(json.dumps(oo, indent=4, sort_keys=True))
+    #order = place_order ("buy", "VZIO", 44, "midprice")
+    #print(json.dumps(order, indent=4, sort_keys=True))
 
-    # for symbol in oo:
-    #     request_id = oo[symbol]["request_id"]
-    #     result = cancel_order(request_id)
-    #     print(result)
+    oos = open_orders()
+    oos = oos["accounts"][main_account_id]["open_orders"]
+    print(json.dumps(oos, indent=4, sort_keys=True))
 
-    oo = open_orders()
-    oo = oo["accounts"][main_account_id]["open_orders"]
-    print(json.dumps(oo, indent=4, sort_keys=True))
+    #for oo in oos:
+    #    request_id = oo["request_id"]
+    #    result = cancel_order(request_id)
+    #    print(result)
+
+    #oos = open_orders()
+    #oos = oos["accounts"][main_account_id]["open_orders"]
+    #print(json.dumps(oos, indent=4, sort_keys=True))
