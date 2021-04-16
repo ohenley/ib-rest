@@ -1,3 +1,4 @@
 # ib-rest
 
-WIP! Stay tuned. ;)
+Works great.
+Description is WIP! Stay tuned. ;)
