@@ -1,5 +1,5 @@
 with ib_ada; use ib_ada;
-with ib_ada.conn;
+with ib_ada.connection;
 with ib_ada.communication;
 
 with Ada.text_io; use Ada.Text_IO;
@@ -92,7 +92,7 @@ begin
    result := handle_command_line_arguments;
 
    if result then
-      ib_ada.conn.client.setup(gateway);
+      ib_ada.connection.client.setup(gateway);
 
       ib_ada.communication.handshake;
       ib_ada.communication.start_api;
@@ -217,7 +217,7 @@ begin
             Close_Socket (Socket => Connection);
          exception
             when Ada.IO_Exceptions.End_Error =>
-               ib_ada.conn.client.disconnect;
+               ib_ada.connection.client.disconnect;
          end;
       end loop;
    end if;
