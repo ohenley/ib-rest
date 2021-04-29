@@ -203,7 +203,7 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
             "status": "success"
          }
          ```
-    - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet.
+    - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet. :) 🤦
 
 - **open orders** : `http://{base_url}/open_orders`
     - description : retrieves trades already ordered to IB but not yet sealed/completed.
@@ -256,7 +256,7 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
             "status": "success"
          }
          ```
-    - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet.
+    - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet. :) 🤦
 
 
 ## Acknowledgments
