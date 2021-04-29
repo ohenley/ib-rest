@@ -91,30 +91,26 @@ $ python3 ./python-client.py
 All responses are JSON objects and follow the [JSend](https://github.com/omniti-labs/jsend) response convention. 
 
 #### Available HTTP endpoints
-- accounts information : 
-    - description : retrieves type of account, account currency, different amounts type.
-    - pattern : `http://{base_url}/accounts_summary?tag={tag_type}`    
+- **accounts information** : `http://{base_url}/accounts_summary?tag={tag_type}` 
+    - description : retrieves type of account, account currency, different amounts type.   
     - mandatory : [`tag`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L214-L224)
     - e.g. : `http://127.0.0.1:8080/accounts_summary?tag=NET_LIQUIDATION`
 
-- positions (with profits) :
-    - description : retrieves your current positions (trades) data. 
-    - pattern : `http://{base_url}/positions?profit_and_loss={boolean}`    
+- **positions (with profits)** : `http://{base_url}/positions?profit_and_loss={boolean}`
+    - description : retrieves your current positions (trades) data.     
     - optional : `profit_and_loss`
     - e.g. : `http://127.0.0.1:8080/positions?profit_and_loss=true`
 
-- commission :
+- **commission** : `http://{base_url}/commission?side={order_side_type}&symbol={string}&quantity={integer}&at_price_type={order_at_price_type}`
     - description : retrieves how much it would cost to enter a position (trade).
-    - pattern : `http://{base_url}/commission?side={order_side_type}&symbol={string}&quantity={integer}&at_price_type={order_at_price_type}`    
     - mandatory : [`side`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L77)
     - mandatory : `symbol`
     - mandatory : `quantity`
     - mandatory : [`at_price_type`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L78) 
     - e.g. : `http://127.0.0.1:8080/commission?side=BUY&symbol=IBM&quantity=10&at_price_type=MKT`
 
-- place orders :
+- **place orders** : `http://{base_url}/place_order?side={order_side_type}&symbol={string}&quantity={integer}&at_price_type={order_at_price_type}`
     - description : enter a trade for a given security.
-    - pattern : `http://{base_url}/place_order?side={order_side_type}&symbol={string}&quantity={integer}&at_price_type={order_at_price_type}`    
     - mandatory : [`side`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L77)
     - mandatory : `symbol`
     - mandatory : `quantity`
@@ -122,16 +118,14 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
     - e.g. `http://127.0.0.1:8080/place_order?side=BUY&symbol=IBM&quantity=10&at_price_type=MIDPRICE`
     - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet.
 
-- cancel_orders :
+- **cancel_orders** : `http://{base_url}/cancel_order?request_id={integer}`
     - description : cancel a trade already ordered to IB.
-    - pattern : `http://{base_url}/cancel_order?request_id={integer}`
     - mandatory : `request_id`
     - e.g. `http://127.0.0.1:8080/cancel_order?request_id=871`
     - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet.
 
-- open orders :
+- **open orders** : `http://{base_url}/open_orders`
     - description : retrieves trades already ordered to IB but not yet sealed/completed.
-    - pattern : `http://{base_url}/open_orders`
     - e.g. `http://127.0.0.1:8080/open_orders`
 
 ## Acknowledgments
