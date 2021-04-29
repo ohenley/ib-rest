@@ -78,8 +78,9 @@ First command prompt:
 ```
 $ cd [ib-rest_root_folder]/build/bin
 $ ./rest_server run port:8080 gateway:ib_paper
-
+```
 Second command prompt:
+```
 $ cd [ib-rest_root_folder]/tests
 $ python3 ./python-client.py
 ```
@@ -89,38 +90,38 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
 - accounts information : 
     - description : retrieves type of account, account currency, different amounts type.
     - pattern : `http://{base_url}/accounts_summary?tag={tag_type}`    
-    - [`tag`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L214-L224) mandatory.
-    - e.g. `http://127.0.0.1:8080/accounts_summary?tag=NET_LIQUIDATION`
+    - mandatory : [`tag`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L214-L224)
+    - e.g. : `http://127.0.0.1:8080/accounts_summary?tag=NET_LIQUIDATION`
 
 - positions (with profits) :
     - description : retrieves your current positions (trades) data. 
     - pattern : `http://{base_url}/positions?profit_and_loss={boolean}`    
-    - `profit_and_loss` optional.
-    - e.g. `http://127.0.0.1:8080/positions?profit_and_loss=true`
+    - optional : `profit_and_loss`
+    - e.g. : `http://127.0.0.1:8080/positions?profit_and_loss=true`
 
 - commission :
     - description : retrieves how much it would cost to enter a position (trade).
     - pattern : `http://{base_url}/commission?side={order_side_type}&symbol={string}&quantity={integer}&at_price_type={order_at_price_type}`    
-    - [`side`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L77) mandatory.
-    - `symbol` mandatory.
-    - `quantity` mandatory.
-    - [`at_price_type`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L78) 
-    - e.g. `http://127.0.0.1:8080/commission?side=BUY&symbol=IBM&quantity=10&at_price_type=MKT`
+    - mandatory : [`side`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L77)
+    - mandatory : `symbol`
+    - mandatory : `quantity`
+    - mandatory : [`at_price_type`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L78) 
+    - e.g. : `http://127.0.0.1:8080/commission?side=BUY&symbol=IBM&quantity=10&at_price_type=MKT`
 
 - place orders :
     - description : enter a trade for a given security.
     - pattern : `http://{base_url}/place_order?side={order_side_type}&symbol={string}&quantity={integer}&at_price_type={order_at_price_type}`    
-    - [`side`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L77) mandatory.
-    - `symbol` mandatory.
-    - `quantity` mandatory.
-    - [`at_price_type`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L78) 
+    - mandatory : [`side`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L77)
+    - mandatory : `symbol`
+    - mandatory : `quantity`
+    - mandatory : [`at_price_type`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L78) 
     - e.g. `http://127.0.0.1:8080/place_order?side=BUY&symbol=IBM&quantity=10&at_price_type=MIDPRICE`
     - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet.
 
 - cancel_orders :
     - description : cancel a trade already ordered to IB.
     - pattern : `http://{base_url}/cancel_order?request_id={integer}`
-    - `request_id` mandatory.
+    - mandatory : `request_id`
     - e.g. `http://127.0.0.1:8080/cancel_order?request_id=871`
     - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet.
 
