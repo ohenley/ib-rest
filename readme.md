@@ -11,7 +11,7 @@ Interactive Brokers (IB) RESTful server written in Ada.
 4. [Dependencies](#Dependencies)
 5. [Building](#Building)
    1. [Windows](#Windows)
-   2. [Other OSes](#Other-OSes)
+   2. [Linux](#Linux)
 6. [Installation](#Installation)
 7. [Limitations](#Limitations)
 8. [Usage](#Usage)
@@ -57,7 +57,8 @@ $ git clone --recursive https://github.com/ohenley/ib-rest.git
 $ cd ib-rest
 $ gprbuild ib_rest.gpr
 ```
-#### Linux (ubuntu 20.04.1+ flavors)
+#### Linux
+Tested on ubuntu 20.04.1+ flavor.
 ```
 $ sudo apt-get install gnat-gps
 $ git clone --recursive https://github.com/ohenley/ib-rest.git
