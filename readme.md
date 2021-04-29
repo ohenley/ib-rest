@@ -15,7 +15,8 @@ Interactive Brokers (IB) RESTful server written in Ada.
 6. [Installation](#Installation)
 7. [Limitations](#Limitations)
 8. [Usage](#Usage)
-9. [Acknowledgments](#Acknowledgments)
+   1. [Available HTTP endpoints](#Available-HTTP-endpoints)
+10. [Acknowledgments](#Acknowledgments)
 
 </details>
 
@@ -89,7 +90,7 @@ $ python3 ./python-client.py
 ```
 All responses are JSON objects and follow the [JSend](https://github.com/omniti-labs/jsend) response convention. 
 
-#### Available endpoints
+#### Available HTTP endpoints
 - accounts information : 
     - description : retrieves type of account, account currency, different amounts type.
     - pattern : `http://{base_url}/accounts_summary?tag={tag_type}`    
