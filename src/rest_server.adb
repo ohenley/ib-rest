@@ -159,7 +159,7 @@ begin
                  "{" &
                  """status"" : " & success_error_status(status) & "," &
                  """data"" : " & success_status_data(status, data) & "," &
-                 """req_number"" : " & trim(status.req_number'image, ada.strings.left) &
+                 """request_number"" : " & trim(status.req_number'image, ada.strings.left) &
                  "}";
             begin
                return j;
@@ -232,15 +232,15 @@ begin
                      end;
                   end;
                elsif request.resource = "/cancel_order" then
-                  if request.has_parameter ("request_id") then
+                  if request.has_parameter ("request_number") then
                      declare
-                        request_id : integer := integer'value (request.parameter ("request_id"));
+                        request_number : integer := integer'value (request.parameter ("request_number"));
                      begin
-                        resp := ib_ada.communication.cancel_order (request_id);
-                        instance'output (stream (connection), ok (data => "{ ""success"" : ""cancel order " & trim(request_id'image, ada.strings.left) & " sent.""}"));
+                        resp := ib_ada.communication.cancel_order (request_number);
+                        instance'output (stream (connection), ok (data => format_response(resp, "cancel order " & trim(request_number'image, ada.strings.left) & " sent.")));
                      end;
                   else
-                     instance'output (stream (connection), ok (data =>  "{ ""fail"" : ""request_id needed as query parameter.""}"  ));
+                     instance'output (stream (connection), ok (data => format_fail("request_number needed as query parameter.")));
                   end if;
                elsif request.resource = "/accounts_summary" then
                   if request.has_parameter ("tag") then

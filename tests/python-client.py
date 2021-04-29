@@ -49,8 +49,8 @@ def buy_quantity_for(symbol, amount):
 
     return quantity
 
-def cancel_order(request_id):
-    url = 'http://127.0.0.1:8080/cancel_order?request_id={}'.format(request_id)
+def cancel_order(request_number):
+    url = 'http://127.0.0.1:8080/cancel_order?request_number={}'.format(request_number)
     answer = urllib.request.urlopen(url).read().decode()
     return json.loads(answer)
 
@@ -59,19 +59,15 @@ def open_orders():
     return json.loads(answer)
 
 
-if __name__ == "__main__":
-
-    # from another command prompt make sure to first execute:
-    # ./rest_server run port:8080 gateway:ib_paper
-    
+def test_main():
     accounts_summary = accounts_summary("NET_LIQUIDATION")
     print(json.dumps(accounts_summary, indent=4, sort_keys=True))
 
-    main_account_id = list(accounts_summary["accounts"].keys())[0]
+    main_account_id = list(accounts_summary["data"]["accounts"].keys())[0]
     print(main_account_id)
 
     positions_with_profits = get_positions_with_profits(main_account_id)
-    positions_with_profits = positions_with_profits["accounts"][main_account_id]["positions"]
+    positions_with_profits = positions_with_profits["data"]["accounts"][main_account_id]["positions"]
     total_profit = 0
     total_stake = 0
     for pos in positions_with_profits:
@@ -88,14 +84,44 @@ if __name__ == "__main__":
     #print(json.dumps(order, indent=4, sort_keys=True))
 
     oos = open_orders()
-    oos = oos["accounts"][main_account_id]["open_orders"]
+    oos = oos["data"]["accounts"][main_account_id]["open_orders"]
     print(json.dumps(oos, indent=4, sort_keys=True))
 
     #for oo in oos:
-    #    request_id = oo["request_id"]
-    #    result = cancel_order(request_id)
+    #    request_number = oo["request_number"]
+    #    result = cancel_order(request_number)
     #    print(result)
 
     #oos = open_orders()
     #oos = oos["accounts"][main_account_id]["open_orders"]
     #print(json.dumps(oos, indent=4, sort_keys=True))
+
+def test_commission():
+    result = commission("BUY", "IBM", 10, "MIDPRICE")
+    print(json.dumps(result, indent=4, sort_keys=True))
+
+def test_place_order():
+    result = place_order("BUY", "IBM", 10, "MIDPRICE")
+    print(json.dumps(result, indent=4, sort_keys=True))
+    return result
+
+def test_open_orders():
+    result = open_orders()
+    print(json.dumps(result, indent=4, sort_keys=True))
+
+def test_cancel_order(request_number):
+    result = cancel_order(request_number)
+    print(json.dumps(result, indent=4, sort_keys=True))
+
+if __name__ == "__main__":
+
+    # from another command prompt make sure to first execute:
+    # ./rest_server run port:8080 gateway:ib_paper
+
+    #test_main()
+    #test_commission()
+    #result = test_place_order()
+    test_open_orders()
+    #test_cancel_order(11915)
+    
+    
