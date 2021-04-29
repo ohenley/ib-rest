@@ -25,7 +25,7 @@ Interactive Brokers (IB) RESTful server written in Ada.
 
 - ib-rest, and all its dependencies, are 100% Ada code but the RESTful API it exposes makes it exploitable from any other programming language or technology that supports HTTP communication.
 
-- I started this project because every other 'equivalent' implementation (IB API implementation of all kinds) I tested did not work for my use case, for one reason or another.
+- I started this project because every other 'equivalent' IB API implementation I tested did not work for my use case, for one reason or another.
 
 - ib-rest really is just a convenient RESTful layer over the more involved [ib-ada](https://github.com/ohenley/ib-ada) communication engine. For a more thorough discussion on the technical implications of interfacing IB technologies please consult its [readme](https://github.com/ohenley/ib-ada).
 
