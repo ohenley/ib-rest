@@ -24,7 +24,6 @@ use ada.strings.unbounded;
 use ib_ada;
 
 package ib_json is
-
    function jwrt (k : string; v : integer; last : boolean) return string;
    function jwrt (k : string; v : safe_float; last : boolean) return string;
    function jwrt (k : string; v: contract_type; last : boolean) return string;
@@ -34,5 +33,4 @@ package ib_json is
    function jwrt (k : string; v: summary_map.map; last : boolean) return string;
    function jwrt (k : string; v: act_type; last : boolean) return string;
    function jwrt (k : string; v: account_map.map; last : boolean) return string;
-
 end ib_json;
