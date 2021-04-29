@@ -29,7 +29,7 @@ Interactive Brokers (IB) RESTful server written in Ada.
 - ib-rest really is just a convenient RESTful layer over the more involved [ib-ada](https://github.com/ohenley/ib-ada) communication engine. For a more thorough discussion on the technical implications of interfacing IB technologies please consult its [readme](https://github.com/ohenley/ib-ada).
 
 ## Status
-- First. This library should work out of the box as I am using it daily. My experience is that it is debugged and quite robust as-is.
+- First. This application should work out of the box as I am using it daily. My experience is that it is debugged and quite robust as-is.
 - Being lean and mean, it has a limited scope. See [Limitations](#Limitations).
 - The available endpoints are documented in the [Usage](#Usage) section.
 
