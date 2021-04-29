@@ -28,8 +28,7 @@ def place_order(side, symbol, quantity, at_price_type):
 def commission(side, symbol, quantity, at_price_type):
     url = 'http://127.0.0.1:8080/commission?side={}&symbol={}&quantity={}&at_price_type={}'.format(side, symbol, quantity, at_price_type)
     answer = urllib.request.urlopen(url).read().decode()
-    data = json.loads(answer)
-    return data
+    return json.loads(answer)
 
 def buy_quantity_for(symbol, amount):
     latest_price = get_latest_price(symbol)
@@ -40,7 +39,7 @@ def buy_quantity_for(symbol, amount):
     while not found_quantity:
         if quantity <= 0:
             return 0
-        commission_price = commission("BUY", symbol, quantity, "MKT")["commission"]
+        commission_price = commission("BUY", symbol, quantity, "MKT")["data"]["commission"]
         total_cost = quantity * latest_price + commission_price
         if total_cost <= amount:
             found_quantity = True
