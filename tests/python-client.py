@@ -16,8 +16,8 @@ def get_positions(account_id):
     answer = urllib.request.urlopen("http://127.0.0.1:8080/positions").read().decode()
     return json.loads(answer)
     
-def get_positions_with_pnls(account_id):
-    answer = urllib.request.urlopen("http://127.0.0.1:8080/positions?pnl=true").read().decode()
+def get_positions_with_profits(account_id):
+    answer = urllib.request.urlopen("http://127.0.0.1:8080/positions?profit_and_loss=true").read().decode()
     return json.loads(answer)
 
 def place_order(side, symbol, quantity, at_price_type):
@@ -25,8 +25,8 @@ def place_order(side, symbol, quantity, at_price_type):
     answer = urllib.request.urlopen(url).read().decode()
     return json.loads(answer)
 
-def place_fake_order(side, symbol, quantity, at_price_type):
-    url = 'http://127.0.0.1:8080/place_fake_order?side={}&symbol={}&quantity={}&at_price_type={}'.format(side, symbol, quantity, at_price_type)
+def commission(side, symbol, quantity, at_price_type):
+    url = 'http://127.0.0.1:8080/commission?side={}&symbol={}&quantity={}&at_price_type={}'.format(side, symbol, quantity, at_price_type)
     answer = urllib.request.urlopen(url).read().decode()
     data = json.loads(answer)
     return data
@@ -40,8 +40,8 @@ def buy_quantity_for(symbol, amount):
     while not found_quantity:
         if quantity <= 0:
             return 0
-        commission = place_fake_order("BUY", symbol, quantity, "MKT")["commission"]
-        total_cost = quantity * latest_price + commission
+        commission_price = commission("BUY", symbol, quantity, "MKT")["commission"]
+        total_cost = quantity * latest_price + commission_price
         if total_cost <= amount:
             found_quantity = True
         else:
@@ -61,7 +61,7 @@ def open_orders():
 
 if __name__ == "__main__":
 
-    # at another command prompt, execute:
+    # from another command prompt make sure to first execute:
     # ./rest_server run port:8080 gateway:ib_paper
     
     accounts_summary = accounts_summary("NET_LIQUIDATION")
@@ -70,20 +70,19 @@ if __name__ == "__main__":
     main_account_id = list(accounts_summary["accounts"].keys())[0]
     print(main_account_id)
 
-    positions_with_pnl = get_positions_with_pnls(main_account_id)
-    positions_with_pnl = positions_with_pnl["accounts"][main_account_id]["positions"]
-    total_pnl = 0
+    positions_with_profits = get_positions_with_profits(main_account_id)
+    positions_with_profits = positions_with_profits["accounts"][main_account_id]["positions"]
+    total_profit = 0
     total_stake = 0
-    for pos in positions_with_pnl:
-        total_stake = total_stake + positions_with_pnl[pos]["open_value"]
-        total_pnl = total_pnl + positions_with_pnl[pos]["pnl_unrealized"]
+    for pos in positions_with_profits:
+        total_stake = total_stake + positions_with_profits[pos]["open_value"]
+        total_profit = total_profit + positions_with_profits[pos]["unrealized_profit"]
     
-    positions_with_pnl.update({"total_pnl" : total_pnl,
-                               "total_stake" : total_stake,
-                               "appreciation" : total_pnl/total_stake})
+    positions_with_profits.update({"total_profit" : total_profit,
+                                   "total_stake" : total_stake,
+                                   "appreciation" : total_profit/total_stake})
 
-    print(json.dumps(positions_with_pnl, indent=4, sort_keys=True))
-
+    print(json.dumps(positions_with_profits, indent=4, sort_keys=True))
 
     #order = place_order ("buy", "VZIO", 44, "midprice")
     #print(json.dumps(order, indent=4, sort_keys=True))

@@ -1,9 +1,30 @@
-with Ada.Containers.Indefinite_Hashed_Maps; use Ada.Containers;
+--  spdx-license-identifier: apache-2.0
+--
+--  copyright (c) 2021 ohenley <olivier.henley@gmail.com>
+--
+--  licensed under the apache license, version 2.0 (the "license");
+--  you may not use this file except in compliance with the license.
+--  you may obtain a copy of the license at
+--
+--      http://www.apache.org/licenses/license-2.0
+--
+--  unless required by applicable law or agreed to in writing, software
+--  distributed under the license is distributed on an "as is" basis,
+--  without warranties or conditions of any kind, either express or implied.
+--  see the license for the specific language governing permissions and
+--  limitations under the license.
 
-with Ada.Characters.Handling; use  Ada.Characters.Handling;
-with Ada.Strings.Fixed; use Ada.Strings.Fixed;
+with ada.containers.indefinite_hashed_maps;
+with ada.characters.handling;
+with ada.strings.fixed;
+-------------------------------------------
+with ib_ada;
 
-with ib_ada; use ib_ada;
+use ada.containers;
+use ada.characters.handling;
+use ada.strings.fixed;
+-------------------------------------------
+use ib_ada;
 
 package body ib_json is
 
@@ -17,19 +38,19 @@ package body ib_json is
 
 
    function jwrt (k : string; v : integer; last : boolean) return string is
-      j : string := """" & k & """ : " & trim(v'image, Ada.Strings.Left);
+      j : string := """" & k & """ : " & trim(v'image, ada.strings.left);
    begin
       return last_item(j, last);
    end;
 
    function jwrt (k : string; v : safe_float; last : boolean) return string is
-      j : string := """" & k & """ : " & trim(v'image, Ada.Strings.Left);
+      j : string := """" & k & """ : " & trim(v'image, ada.strings.left);
    begin
       return last_item(j, last);
    end;
 
    function jwrt (k : string; v : boolean; last : boolean) return string is
-      j : string := """" & k & """ : " & trim(v'image, Ada.Strings.Left);
+      j : string := """" & k & """ : " & trim(v'image, ada.strings.left);
    begin
       return last_item(j, last);
    end;
@@ -62,7 +83,7 @@ package body ib_json is
         jwrt ("open_value", safe_float(v.quantity) * v.average_cost, false) &
         jwrt ("quantity", v.quantity, false) &
         jwrt ("average_cost", v.average_cost, false) &
-        jwrt ("pnl_unrealized", v.pnl_unrealized, true) &
+        jwrt ("unrealized_profit", v.unrealized_profit, true) &
         "}";
    begin
       return last_item (j, last);
