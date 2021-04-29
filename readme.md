@@ -83,7 +83,7 @@ First command prompt:
 $ cd [ib-rest_root_folder]/build/bin
 $ ./rest_server run port:8080 gateway:ib_paper
 ```
-Second command prompt:
+Second command prompt (example using python):
 ```
 $ cd [ib-rest_root_folder]/tests
 $ python3 ./python-client.py
