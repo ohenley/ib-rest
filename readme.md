@@ -246,7 +246,6 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
 - **cancel_orders** : `http://{base_url}/cancel_order?request_number={integer}`
     - description : cancel a trade already ordered to IB.
     - mandatory : `request_number`
-    - e.g. `http://127.0.0.1:8080/cancel_order?request_number=871`
     - e.g. : 
       - request : `http://127.0.0.1:8080/cancel_order?request_number=11804`
       - response : 
