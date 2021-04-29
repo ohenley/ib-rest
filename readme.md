@@ -94,13 +94,79 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
 - **accounts information** : `http://{base_url}/accounts_summary?tag={tag_type}` 
     - description : retrieves type of account, account currency, different amounts type.   
     - mandatory : [`tag`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L214-L224)
-    - e.g. : `http://127.0.0.1:8080/accounts_summary?tag=NET_LIQUIDATION`
+    - e.g. : 
+      - request : `http://127.0.0.1:8080/accounts_summary?tag=NET_LIQUIDATION`
+      - response : 
+         ```
+         {
+            "data": {
+               "accounts": {
+                  "DU3689338": {
+                     "open_orders": [],
+                     "positions": {},
+                     "summaries": {
+                        "net_liquidation": {
+                           "currency": "USD",
+                           "value": 998645.0
+                        }
+                     }
+                  }
+               }
+            },
+            "req_number": 0,
+            "status": "success"
+         }
+         ```
 
 - **positions (with profits)** : `http://{base_url}/positions?profit_and_loss={boolean}`
     - description : retrieves your current positions (trades) data.     
     - optional : `profit_and_loss`
     - e.g. : 
-      - `http://127.0.0.1:8080/positions?profit_and_loss=true`
+      - request : `http://127.0.0.1:8080/positions?profit_and_loss=true`
+      - response : 
+         ```
+         {
+            "data": {
+                "accounts": {
+                    "DU3689338": {
+                        "open_orders": [],
+                        "positions": {
+                            "ALTO": {
+                                "average_cost": 5.07503,
+                                "contract": {
+                                    "contract_id": 465324096,
+                                    "currency": "USD",
+                                    "exchange": "NASDAQ",
+                                    "security": "STK",
+                                    "symbol": "ALTO"
+                                },
+                                "open_value": 1009.93,
+                                "quantity": 199,
+                                "unrealized_profit": 162.976
+                            },
+                            ...
+                            "CRCT": {
+                                "average_cost": 25.6863,
+                                "contract": {
+                                    "contract_id": 478807161,
+                                    "currency": "USD",
+                                    "exchange": "NASDAQ",
+                                    "security": "STK",
+                                    "symbol": "CRCT"
+                                },
+                                "open_value": 976.08,
+                                "quantity": 38,
+                                "unrealized_profit": -11.3875
+                            }
+                        },
+                        "summaries": {}
+                    }
+                }
+            },
+            "req_number": 0,
+            "status": "success"
+        }
+         ```
 
 - **commission** : `http://{base_url}/commission?side={order_side_type}&symbol={string}&quantity={integer}&at_price_type={order_at_price_type}`
     - description : retrieves how much it would cost to enter a position (trade).
