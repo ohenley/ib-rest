@@ -93,10 +93,9 @@ procedure rest_server is
                          return socket_type is
    begin
       return server : socket_type do
-         create_socket (socket => server,
-                        mode   => mode);
+         create_socket (socket => server, mode   => mode);
          set_socket_option (socket => server,
-                            level => ip_protocol_for_ip_level,
+                            level  => ip_protocol_for_ip_level,
                             option => (name    => reuse_address,
                                        enabled => true));
          bind_socket (socket  => server,
@@ -105,8 +104,7 @@ procedure rest_server is
                                   port   => port));
 
          if mode = socket_stream then
-            listen_socket (socket => server,
-                           length => queue_length);
+            listen_socket (socket => server, length => queue_length);
          end if;
       end return;
    end make_server;
