@@ -44,6 +44,9 @@ Interactive Brokers (IB) RESTful server written in Ada.
 - [black](https://github.com/ohenley/black) - HTTP library.
 
 ## Building
+
+*IMPORTANT* : This project uses git submodules. Clone accordingly, like follow:
+
 #### Windows
 - Install [GNAT community 2020](https://community.download.adacore.com/v1/966801764ae160828c97d2c33000e9feb08d4cce?filename=gnat-2020-20200429-x86_64-windows-bin.exe)
 ```
@@ -131,4 +134,4 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
     - e.g. `http://127.0.0.1:8080/open_orders`
 
 ## Acknowledgments
-- Thanks to late @sparre for his wonderful and sane [black](https://github.com/sparre/black) work which made the REST layer a breeze to make.
+- Thanks to late @sparre for his wonderful and sane work on [black](https://github.com/sparre/black) which made the REST layer a breeze to make.
