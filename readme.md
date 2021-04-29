@@ -72,8 +72,8 @@ Only works for stocks (STK) and provides a minimum viable interface to the TWS/I
 - positions (with-profits)
 - commission
 - place orders
-- cancel_orders
 - open orders
+- cancel_orders
 
 ## Usage
 - Start TWS or IB Gateway.
@@ -113,7 +113,7 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
                   }
                }
             },
-            "req_number": 0,
+            "request_number": 0,
             "status": "success"
          }
          ```
@@ -163,7 +163,7 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
                     }
                 }
             },
-            "req_number": 0,
+            "request_number": 0,
             "status": "success"
         }
          ```
@@ -174,7 +174,18 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
     - mandatory : `symbol`
     - mandatory : `quantity`
     - mandatory : [`at_price_type`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L78) 
-    - e.g. : `http://127.0.0.1:8080/commission?side=BUY&symbol=IBM&quantity=10&at_price_type=MKT`
+    - e.g. : 
+      - request : `http://127.0.0.1:8080/commission?side=BUY&symbol=IBM&quantity=10&at_price_type=MKT`
+      - response : 
+         ```
+         {
+            "data": {
+               "commission": 0.99
+            },
+            "request_number": 0,
+            "status": "success"
+         }
+         ```
 
 - **place orders** : `http://{base_url}/place_order?side={order_side_type}&symbol={string}&quantity={integer}&at_price_type={order_at_price_type}`
     - description : enter a trade for a given security.
@@ -182,18 +193,72 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
     - mandatory : `symbol`
     - mandatory : `quantity`
     - mandatory : [`at_price_type`](https://github.com/ohenley/ib-ada/blob/main/src/ib_ada.ads#L78) 
-    - e.g. `http://127.0.0.1:8080/place_order?side=BUY&symbol=IBM&quantity=10&at_price_type=MIDPRICE`
-    - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet.
-
-- **cancel_orders** : `http://{base_url}/cancel_order?request_id={integer}`
-    - description : cancel a trade already ordered to IB.
-    - mandatory : `request_id`
-    - e.g. `http://127.0.0.1:8080/cancel_order?request_id=871`
+    - e.g. : 
+      - request : `http://127.0.0.1:8080/place_order?side=BUY&symbol=IBM&quantity=10&at_price_type=MIDPRICE`
+      - response : 
+         ```
+         {
+            "data": {},
+            "request_number": 11804,
+            "status": "success"
+         }
+         ```
     - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet.
 
 - **open orders** : `http://{base_url}/open_orders`
     - description : retrieves trades already ordered to IB but not yet sealed/completed.
-    - e.g. `http://127.0.0.1:8080/open_orders`
+    - e.g. : 
+      - request : `http://127.0.0.1:8080/open_orders`
+      - response : 
+         ```
+         {
+            "data": {
+               "accounts": {
+                  "DU3689338": {
+                     "open_orders": [
+                        {
+                           "contract": {
+                              "contract_id": 8314,
+                              "currency": "USD",
+                              "exchange": "SMART",
+                              "security": "STK",
+                              "symbol": "IBM"
+                           },
+                           "order": {
+                              "at_price_type": "MIDPRICE",
+                              "quantity": " 10",
+                              "side": "BUY",
+                              "time_in_force": "DAY"
+                           },
+                           "request_number": 11804
+                        }
+                     ],
+                  "positions": {},
+                  "summaries": {}
+                 }
+               }
+            },
+            "request_number": 0,
+            "status": "success"
+         }
+         ```
+
+- **cancel_orders** : `http://{base_url}/cancel_order?request_number={integer}`
+    - description : cancel a trade already ordered to IB.
+    - mandatory : `request_number`
+    - e.g. `http://127.0.0.1:8080/cancel_order?request_number=871`
+    - e.g. : 
+      - request : `http://127.0.0.1:8080/cancel_order?request_number=11804`
+      - response : 
+         ```
+         {
+            "data": "cancel order 11804 sent.",
+            "request_number": 0,
+            "status": "success"
+         }
+         ```
+    - note: in theory should be a POST call (todo) but it changes nothing in reality, there is no GET/POST police yet.
+
 
 ## Acknowledgments
-- Thanks to late @sparre for his wonderful and sane work on [black](https://github.com/sparre/black) which made the REST layer a breeze to make.
+- Thanks to remembered @sparre for his wonderful and sane work on [black](https://github.com/sparre/black) which made the REST layer a breeze to make.
