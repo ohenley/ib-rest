@@ -42,7 +42,6 @@ use gnat.spitbol.patterns;
 -----------------------------
 use ib_ada;
 
-
 procedure rest_server is
    use gnat.sockets;
    listener : socket_type;
@@ -112,22 +111,17 @@ procedure rest_server is
       end return;
    end make_server;
 
-   result : boolean;
    resp : ib_ada.communication.resp_type;
 
 begin
-   result := handle_command_line_arguments;
-
-   if result then
+   if handle_command_line_arguments then
       ib_ada.connection.client.setup(gateway);
 
       resp := ib_ada.communication.handshake;
       resp := ib_ada.communication.start_api;
-
       put_line ("connected to " & gateway'image);
 
       listener := make_server (port_type(port));
-
       put_line ("listening at http://127.0.0.1:" & trim(port'image, ada.strings.left));
 
       loop
@@ -189,7 +183,6 @@ begin
                         resp := ib_ada.communication.profits_and_losses;
                      end if;
                   end if;
-
                   declare
                      json_resp : string := "{" & ib_json.jwrt ("accounts", accounts, true) & "}";
                   begin
@@ -202,7 +195,6 @@ begin
                   begin
                      instance'output (stream (connection), ok (data => format_response(resp, json_resp)));
                   end;
-
                elsif request.resource = "/place_order" then
                   declare
                      side : order_side_type := order_side_type'value (request.parameter ("side"));
