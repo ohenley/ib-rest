@@ -35,10 +35,12 @@ Interactive Brokers (IB) RESTful server written in Ada.
 - The available endpoints are documented in the [Usage](#Usage) section.
 
 ## Prerequisites
-- An activated Interactive Brokers (IB) account. I recommend a 'paper' account (fake account) at first.
-- Win32 or Linux platform (tested and working on Windows 10, Lubuntu 20.04.1)
-- [TWS](https://www.interactivebrokers.ca/en/index.php?f=16040) or [IB Gateway](https://www.interactivebrokers.ca/en/index.php?f=16457) v978+.
-- GNAT (tested and working with GNAT community 2020, GNAT FSF 9.3.0)
+- compilation:
+   - GNAT (tested and working with GNAT community 2020, GNAT FSF 9.3.0)
+- runtime:
+   - An activated Interactive Brokers (IB) account. I recommend a 'paper' account (fake account) at first.
+   - Win32 or Linux platform (tested and working on Windows 10, Lubuntu 20.04.1).
+   - [TWS](https://www.interactivebrokers.ca/en/index.php?f=16040) or [IB Gateway](https://www.interactivebrokers.ca/en/index.php?f=16457).
 
 ## Dependencies
 - [ib-ada](https://github.com/ohenley/ib-ada) - IB TWS/IB Gateway communication engine library.
