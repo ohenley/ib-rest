@@ -48,7 +48,7 @@ Interactive Brokers (IB) RESTful server written in Ada.
 
 ## Building
 
-*IMPORTANT* : This project uses git submodules. Clone accordingly, like follow:
+*IMPORTANT* : This project uses git submodules. Clone accordingly, like below:
 
 #### Windows
 - Install [GNAT community 2020](https://community.download.adacore.com/v1/966801764ae160828c97d2c33000e9feb08d4cce?filename=gnat-2020-20200429-x86_64-windows-bin.exe)
