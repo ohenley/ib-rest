@@ -76,24 +76,11 @@ def test_main():
     positions_with_profits.update({"total_profit" : total_profit,
                                    "total_stake" : total_stake,
                                    "appreciation" : total_profit/total_stake})
-
     print(json.dumps(positions_with_profits, indent=4, sort_keys=True))
-
-    #order = place_order ("buy", "VZIO", 44, "midprice")
-    #print(json.dumps(order, indent=4, sort_keys=True))
 
     oos = open_orders()
     oos = oos["data"]["accounts"][main_account_id]["open_orders"]
     print(json.dumps(oos, indent=4, sort_keys=True))
-
-    #for oo in oos:
-    #    request_number = oo["request_number"]
-    #    result = cancel_order(request_number)
-    #    print(result)
-
-    #oos = open_orders()
-    #oos = oos["accounts"][main_account_id]["open_orders"]
-    #print(json.dumps(oos, indent=4, sort_keys=True))
 
 def test_commission():
     result = commission("BUY", "IBM", 10, "MIDPRICE")
