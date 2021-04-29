@@ -99,7 +99,8 @@ All responses are JSON objects and follow the [JSend](https://github.com/omniti-
 - **positions (with profits)** : `http://{base_url}/positions?profit_and_loss={boolean}`
     - description : retrieves your current positions (trades) data.     
     - optional : `profit_and_loss`
-    - e.g. : `http://127.0.0.1:8080/positions?profit_and_loss=true`
+    - e.g. : 
+      - `http://127.0.0.1:8080/positions?profit_and_loss=true`
 
 - **commission** : `http://{base_url}/commission?side={order_side_type}&symbol={string}&quantity={integer}&at_price_type={order_at_price_type}`
     - description : retrieves how much it would cost to enter a position (trade).
