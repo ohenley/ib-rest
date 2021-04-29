@@ -118,10 +118,10 @@ if __name__ == "__main__":
     # from another command prompt make sure to first execute:
     # ./rest_server run port:8080 gateway:ib_paper
 
-    #test_main()
-    #test_commission()
-    #result = test_place_order()
+    test_main()
+    test_commission()
+    result = test_place_order()
     test_open_orders()
-    #test_cancel_order(11915)
+    test_cancel_order(result["request_number"])
     
     
