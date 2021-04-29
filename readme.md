@@ -1,4 +1,4 @@
-# ib-ada
+# ib-rest
 Interactive Brokers (IB) RESTful server written in Ada.
 
 ## Table of Contents
