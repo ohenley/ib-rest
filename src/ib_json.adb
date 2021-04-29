@@ -36,7 +36,6 @@ package body ib_json is
       return i;
    end;
 
-
    function jwrt (k : string; v : integer; last : boolean) return string is
       j : string := """" & k & """ : " & trim(v'image, ada.strings.left);
    begin
@@ -61,7 +60,6 @@ package body ib_json is
    begin
       return last_item(j, last);
    end;
-
 
    function jwrt (k : string; v: contract_type; last : boolean) return string is
       j : string :=
@@ -110,7 +108,6 @@ package body ib_json is
    begin
       return last_item (j, last);
    end;
-
 
    function jwrt (v: open_order_type; last : boolean) return string is
       j : string :=
@@ -203,4 +200,3 @@ package body ib_json is
    end;
 
 end ib_json;
-
